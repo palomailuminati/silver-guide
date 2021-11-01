@@ -1,0 +1,304 @@
+---
+title: "TRABAJO GRUPAL Estadística 2"
+author: "Sebastian Calderón y Valeria Betancourt"
+date: "28/10/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(rio)
+data=import("CAP_900_INTEGRACION.sav")
+```
+
+Link de repositorio en github: https://github.com/valebetancourt/silver-guide.git
+
+La situación de las personas discapacitadas en el Perú continúa siendo un problema latente y poco tratado en las medidas estatales. Según Francke y Cordero, la población discapacitada significa entre el 13% y 18% de la población. Referente a eso los autores mencionan que muchas personas pertenecientes a esta población se encuentran en esa condición “debido a que la sociedad peruana no ha respondido ante esa situación adaptándose de manera tal de reducir los problemas que tales disfuncionamientos generan” (Francke y Cordero, 2005, p. 5). Existen menciones a esta población dentro del ámbito constitucional, como el Artículo 7 de la Constitución del 1993 que determina que “la persona incapacitada para velar por sí misma a causa de una deficiencia física o mental tiene derecho al respeto de su dignidad y a un régimen legal de protección, atención, readaptación y seguridad” (Constitución Política del Perú, Art. 7, 1993), además del artículo 35 que menciona la existencia de una “bonificación en concursos de méritos y estabilidad laboral relativa” que les da el derecho de obtener una bonificación del 20% sobre la calificación que hayan obtenido (Constitución Política del Perú, Art. 35, 1993). 
+
+Sin embargo, el Estado al haber propuesto políticas públicas para esta población, usualmente ha fallado. Tomando como ejemplo el “Plan de Igualdad de Oportunidades” propuesto al rededor del 2005, que trataba de ayudar a la población discapacitada para que se aproveche su potencial y mejoren su situación, no tuvo buenos resultados. Siguiendo la línea de Francke y Cordero (2005, p. 13), este no tuvo una participación amplia de la población en cuestión, ni hubo una relación entre las organizaciones de personas discapacitadas con el Estado, por lo cual este plan terminó siendo estado-céntrico, sin que la población discapacitada tenga un rol protagónico para expresar sus necesidades y demás. 
+
+En la actualidad, esta problemática persiste. Respecto a la data de la Encuesta Nacional de Hogares (ENAHO) del 2019, mientras que el 55.2% de la población discapacitada pertenece a la Población Económicamente Inactiva (PEI), dentro de la población sin discapacidad solo hay un 25,9% (INEI, 2019). Esto refleja una situación alarmante en el país respecto a las políticas públicas para la población discapacitada, debido a que podría reflejar una falta de implementación de recursos para el acceso de estas a un ambiente laboral. Por otro lado, la misma encuesta menciona que el 43% de personas con discapacidad no tiene acceso a servicios de comunicación, y que el 26.4% son parte de la población analfabeta (INEI, 2019). 
+
+Por último, por participación ciudadana entendemos algo  “global,  una  necesidad  y  un  derecho  humano  que  va  unido  a  la  satisfacción  de  las necesidades  sociales  y  vitales” (Vidal-García, 2021, p. 13). Esto conlleva a la ciudadanía a participar en los  procesos  de  toma  de  decisiones,  asuntos colectivos  o  individuales  en  política. Según Vidal-García (2021: 13) la participación ciudadana tiene la capacidad de conectarse con la participación política de distintos colectivos con discapacidad, cuya mejora es esencial para el desarrollo de la democracia e importante en otros aspectos de la sociedad.
+
+Ahora bien, respecto a la bilbiografía revisada, notamos que los factores asociados a la problemática son la falta de integración de las organizaciones de personas discapacitadas a programas estatales y sociales destinados para estas. Por otro lado, otro factor sería la falta de accesibilidad que se genera al no tener políticas públicas que cubran las necesidades de esta población, lo cual puede ser causado por lo primero acerca de no tomar en cuenta a la población en cuestión para elaborar políticas que deben beneficiarlos. Es por esto que en esta investigación se propone encontrar si estos programas están siendo útiles o no para el desenvolvimiento ciudadano de esta población.
+
+De esta manera, la pregunta planteada para esta investigación, la cual se basa en los datos obtenidos de la Primera Encuesta Nacional de Discapacidad 2012 del INEI, planteamos la siguiente pregunta: ¿Qué programas sociales son los que tienen más usuarios que poseen una participación ciudadana más activa?”, para la cual tenemos como *variable dependiente a la Participación ciudadana (Índice de Juntas Vecinales, Comunidad Religiosa, Asociación de discapacitados y Junta de regantes)* y como *variable independiente: Pertenencia a programas sociales*.
+
+Las hipótesis tentativas planteadas es que aquellos usuarios del programa social Programa nacional de asistencia alimentaria PRONAA Escolar son los que poseen una participación ciudadana más activa. La segunda hipótesis es que la población discapacitada que es usuaria de programas sociales tiene una participación ciudadana más activa que las que no son participes de algún programa social. 
+
+Aparte, como objetivo general nos planteamos hallar el o los programas sociales cuyos usuarios sean posean una participación ciudadana más activa a comparación con otros programas sociales del mismo grupo, así como también definimos uno específico que es hallar en qué medida los usuarios de los programas sociales Juntos y Jóvenes a la obra poseen una participacíón ciudadana más activa.
+
+Bibliografía:
+
+Constitución Política del Perú [Const] Art. 2 y Art. 35, 29 de diciembre de 1993.
+
+Francke, P y Cordero, C (2005). El Plan de Igualdad de Oportunidades para las Personas con Discapacidad: Balance y Propuesta: Trabajo preparado para la COMISIÓN ESPECIAL DE ESTUDIO SOBRE DISCAPACIDAD del Congreso de la República del Perú.
+
+Instituto Nacional de Estadística e Informatica (2019). Encuesta Nacional Hogares sobre Condiciones de Vida y Pobreza [Conjunto de datos]. INEI. 
+
+Vidal-García, J (2021). LA PARTICIPACION CIUDADANA DE LAS PERSONAS CON DISCAPACIDAD. Biotempo, 18 (1), 11-20.
+https://revistas.urp.edu.pe/index.php/Biotempo/article/view/3767/4747
+
+
+#VARIABLE DEPENDIENTE: PARTICIPACIÓN CIUDADANA
+```{r}
+data$`P917$01`[data$`P917$01` == "9"] <- NA
+data$`P917$02`[data$`P917$02` == "9"] <- NA
+data$`P917$03`[data$`P917$03` == "9"] <- NA
+data$`P917$04`[data$`P917$04` == "9"] <- NA
+data$`P917$05`[data$`P917$05` == "9"] <- NA
+data$`P917$06`[data$`P917$06` == "9"] <- NA
+data$`P917$07`[data$`P917$07` == "9"] <- NA
+data$`P917$08`[data$`P917$08` == "9"] <- NA
+data$`P917$09`[data$`P917$09` == "9"] <- NA
+data$`P917$10`[data$`P917$10` == "9"] <- NA
+data$`P917$11`[data$`P917$11` == "9"] <- NA
+
+```
+
+```{r}
+table(data$`P917$01`)
+table(data$`P917$02`)
+table(data$`P917$03`)
+table(data$`P917$04`)
+table(data$`P917$05`)
+table(data$`P917$06`)
+table(data$`P917$07`)
+table(data$`P917$08`)
+table(data$`P917$09`)
+table(data$`P917$10`)
+table(data$`P917$11`)
+```
+
+
+```{r}
+str(data$`P917$01`)
+str(data$`P917$03`)
+str(data$`P917$08`)
+str(data$`P917$10`)
+```
+
+Hemos optado por elegir 4 variables para que sean parte de esta variable dependiente debido a que estas actividades de participación ciudadana son aquellas que poseen más participantes. Entonces, creamos un indice con estas.
+
+```{r}
+data$part=(data$`P917$01`+data$`P917$03`+data$`P917$08`+data$`P917$10`)
+summary(data$part)
+```
+
+
+```{r}
+data$part=(data$part)/3*100
+summary(data$part)
+```
+```{r}
+#Hallamos el rango intercuartil del índice
+IQR(data$part, na.rm = TRUE)
+```
+
+
+Nuestra variable dependiente sería este indice de participación ciudadana (part) que incluye a las JUntas Vecinales, Comunidad Religiosa, Asociación de discapacitados y Junta de regantes. 
+
+```{r}
+library(psych)
+describeBy(data$part)
+```
+Según el cuadro, hay un 3.93% de personas que participan en actividades como Juntas Vecinales, Comunidad Religiosa, Asociación de discapacitados y Junta de regantes. La desviación estándar de este indice es de 11.15. 
+Por otro lado, el skew es 2.71 lo que indicaría una asimetría al rededor del promedio con tendencia a valores mayores. 
+
+
+#VARIABLE INDEPENDIENTE: PROGRAMAS SOCIALES
+
+```{r}
+str(data$"P916$01")
+str(data$"P916$02")
+str(data$"P916$03")
+str(data$"P916$04")
+str(data$"P916$05")
+str(data$"P916$06")
+str(data$"P916$07")
+str(data$"P916$08")
+str(data$"P916$09")
+str(data$"P916$10")
+str(data$"P916$11")
+str(data$"P916$12")
+str(data$"P916$13")
+str(data$"P916$14")
+str(data$"P916$15")
+str(data$"P916$16")
+
+
+```
+
+```{r}
+table(data$`P916$01`)
+table(data$`P916$02`)
+table(data$`P916$03`)
+table(data$`P916$04`)
+table(data$`P916$05`)
+table(data$`P916$06`)
+table(data$`P916$07`)
+table(data$`P916$08`)
+table(data$`P916$09`)
+table(data$`P916$10`)
+table(data$`P916$11`)
+table(data$`P916$12`)
+table(data$`P916$13`)
+table(data$`P916$14`)
+table(data$`P916$15`)
+table(data$`P916$16`)
+```
+
+
+
+```{r}
+data$`P916$01`[data$`P916$01` == "9"] <- NA
+data$`P916$02`[data$`P916$02` == "9"] <- NA
+data$`P916$03`[data$`P916$03` == "9"] <- NA
+data$`P916$04`[data$`P916$04` == "9"] <- NA
+data$`P916$05`[data$`P916$05` == "9"] <- NA
+data$`P916$06`[data$`P916$06` == "9"] <- NA
+data$`P916$07`[data$`P916$07` == "9"] <- NA
+data$`P916$08`[data$`P916$08` == "9"] <- NA
+data$`P916$09`[data$`P916$09` == "9"] <- NA
+data$`P916$10`[data$`P916$10` == "9"] <- NA
+data$`P916$11`[data$`P916$11` == "9"] <- NA
+data$`P916$12`[data$`P916$12` == "9"] <- NA
+data$`P916$13`[data$`P916$13` == "9"] <- NA
+data$`P916$14`[data$`P916$14` == "9"] <- NA
+data$`P916$15`[data$`P916$15` == "9"] <- NA
+data$`P916$16`[data$`P916$16` == "9"] <- NA
+
+
+```
+
+```{r}
+table(data$`P916$01`)
+table(data$`P916$02`)
+table(data$`P916$03`)
+table(data$`P916$04`)
+table(data$`P916$05`)
+table(data$`P916$06`)
+table(data$`P916$07`)
+table(data$`P916$08`)
+table(data$`P916$09`)
+table(data$`P916$10`)
+table(data$`P916$11`)
+table(data$`P916$12`)
+table(data$`P916$13`)
+table(data$`P916$14`)
+table(data$`P916$15`)
+table(data$`P916$16`)
+```
+
+Optamos por omitir los programas educativos (que corresponden a las variables P916$11 y P916$12), debido a que PRONABEC solo posee "No usuarios" dentro en los encuestados de esta base de datos, y por otro lado eliminamos Beca 18 debido a que dentro de esta base de datos posee solo 1 usuario. Procedemos a convertir las demás variables en dicotómicas.
+
+##Convertir variables a dicotómicas
+```{r}
+
+data$inabif=as.factor(data$`P916$01`)
+levels(data$inabif) = c("no", "si")
+table(data$inabif)
+
+data$cunamas=as.factor(data$`P916$02`)
+levels(data$cunamas) = c("no", "si")
+table(data$cunamas)
+
+data$violencia=as.factor(data$`P916$03`)
+levels(data$violencia) = c("no", "si")
+table(data$violencia)
+
+data$juntos=as.factor(data$`P916$04`)
+levels(data$juntos) = c("no", "si")
+table(data$juntos)
+
+data$devida=as.factor(data$`P916$05`)
+levels(data$devida) = c("no", "si")
+table(data$devida)
+
+data$pension=as.factor(data$`P916$06`)
+levels(data$pension) = c("no", "si")
+table(data$pension)
+
+data$pronainf=as.factor(data$`P916$07`)
+levels(data$pronainf) = c("no", "si")
+table(data$pronainf)
+
+data$pronaesc=as.factor(data$`P916$08`)
+levels(data$pronaesc) = c("no", "si")
+table(data$pronaesc)
+
+data$vaso=as.factor(data$`P916$09`)
+levels(data$vaso) = c("no", "si")
+table(data$vaso)
+
+data$comedor=as.factor(data$`P916$10`)
+levels(data$comedor) = c("no", "si")
+table(data$comedor)
+
+data$jovenes=as.factor(data$`P916$13`)
+levels(data$jovenes) = c("no", "si")
+table(data$jovenes)
+
+data$trab=as.factor(data$`P916$14`)
+levels(data$trab) = c("no", "si")
+table(data$trab)
+
+data$labper=as.factor(data$`P916$15`)
+levels(data$labper) = c("no", "si")
+table(data$labper)
+
+data$techo=as.factor(data$`P916$16`)
+levels(data$techo) = c("no", "si")
+table(data$techo)
+
+
+```
+#PRUEBA ESTADÍSTICA
+
+Teniendo en cuenta que tenemos una variable categórica dicotómica (programas sociales) y una numérica (indice de participación ciudadana), hacemos el t.test. 
+
+Para saber qué variables independientes (programas sociales) son los que tienen mayores diferencias significativas con la variable dependiente (indice de participación ciudadana), haremos esta prueba estadística. Así, podremos elegir las variables que usaremos. 
+
+
+```{r}
+t.test(data$part~data$inabif)
+t.test(data$part~data$cunamas)
+t.test(data$part~data$violencia)
+t.test(data$part~data$juntos)
+t.test(data$part~data$devida)
+t.test(data$part~data$pension)
+t.test(data$part~data$pronainf)
+t.test(data$part~data$pronaesc)
+t.test(data$part~data$vaso)
+t.test(data$part~data$comedor)
+t.test(data$part~data$jovenes)
+t.test(data$part~data$trab)
+t.test(data$part~data$labper)
+t.test(data$part~data$techo)
+```
+
+Como notamos, las variables que sí presentan diferencias significativas con respecto a la variable dependiente, son el Programa nacional de asistencia alimentaria PRONAA Escolar (pronaesc), el programa Vaso de leche (vaso), el programa Comedor popular (comedor) y el programa Techo propio (techo). Esto porque estas 4 variables poseen el pvalor menor a 0.05, por tanto se rechaza la hipótesis nula y concluimos que sí tienen diferencias significativas. 
+
+
+Así, nuestra variable dependiente sería *indice de participación ciudadana* y las independientes serían *pronaesc*, *vaso*, *comedor* y *techo*. Entonces, se propone elaborar un modelo de regresión múltiple debido a que las variable dependiente es numérica al ser un indice. 
+
+
+#Finalmente, habiendo encontrado y especificado las variables que utilizaremos para la investigación, las exploraremos. Al ser estas nominales-categóricas, solo hallaremos la moda.
+
+
+```{r}
+library(DescTools)
+Mode(data$pronaesc, na.rm=TRUE)
+Mode(data$vaso, na.rm=TRUE)
+Mode(data$comedor, na.rm=TRUE)
+Mode(data$techo, na.rm=TRUE)
+
+```
+La moda, en los 4 programas sociales elegidos, es que "no son usuarias".
+
+
+
